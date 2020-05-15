@@ -4,12 +4,12 @@
 
 <table class="table">
     <tr>
-        <th>Product ID</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Category ID</th>
-        <th>On Sale</th>
-        <th>StockLevel</th>
+        <th class="headerSortDown">Product ID</th>
+        <th class="headerSortDown">Name</th>
+        <th class="headerSortDown">Price</th>
+        <th class="headerSortDown">Category ID</th>
+        <th class="headerSortDown">On Sale</th>
+        <th class="headerSortDown">StockLevel</th>
     </tr>
     <tr>
         <td>@Model.ProductID</td>
@@ -26,10 +26,26 @@
     <a href="/Product/UpdateProduct/@Model.ProductID">Update this Product</a>
 </div>
 
-<div style="display: block">
+<div>
+    @using (Html.BeginForm("UpdateProduct", "Product", "Post"))
+    {
+        <input type="hidden" asp-for="ProductID" value="@Model.ProductID" />
+        <input type="submit" class="btn btn-block btn-info " onclick="return confirm('Are you sure?')" value="Update this product" />
+    }
+</div>
+
+<div>
     @using (Html.BeginForm("DeleteProduct", "Product", "Post"))
     {
         <input type="hidden" asp-for="ProductID" value="@Model.ProductID" />
-        <input type="submit" onclick="return confirm('Are you sure?')" value="Delete this product" />
+        <input type="submit" class="btn btn-danger btn-block" onclick="return confirm('Are you sure?')" value="Delete this product" />
     }
 </div>
+
+<div></div>
+<!-- <div>
+    Html.ActionLink("Update This Product", "UpdateProduct", "Product", new { id = Model.ProductID })
+</div>
+-->
+
+

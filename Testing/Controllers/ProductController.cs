@@ -33,19 +33,19 @@ namespace Testing.Controllers
             return View(product);
         }
 
-        public IActionResult UpdateProduct(int id)
-        {
-            Product prod = repo.GetProduct(id);
+        //public IActionResult UpdateProduct(int id)
+        //{
+        //    Product prod = repo.GetProduct(id);
 
-            repo.UpdateProduct(prod);
+        //    repo.UpdateProduct(prod);
 
-            if (prod == null)
-            {
-                return View("ProductNotFound");
-            }
+        //    if (prod == null)
+        //    {
+        //        return View("ProductNotFound");
+        //    }
 
-            return View(prod);
-        }
+        //    return View(prod);
+        //}
 
         public IActionResult UpdateProductToDatabase(Product product)
         {
@@ -74,6 +74,28 @@ namespace Testing.Controllers
             repo.DeleteProduct(product);
 
             return RedirectToAction("Index");
+        }
+
+        public IActionResult DeleteProduct2(int id)
+        {
+            repo.DeleteProduct2(id);
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult UpdateProduct(Product product)
+        {
+            Product prod = repo.GetProduct(product.ProductID);
+            prod.Categories = repo.GetCategories();
+
+            repo.UpdateProduct(prod);
+
+            if (prod == null)
+            {
+                return View("ProductNotFound");
+            }
+
+            return View(prod);
         }
     }
 }

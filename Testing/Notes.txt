@@ -1,0 +1,35 @@
+﻿1. Update the UpdateProduct.cshtml file:
+this code will select the already assigned category in the drop down list by using the 'selected' keyword
+
+        <div class="form-group">
+                <label for="">Select a Category</label>
+                <select class="form-control" name="CategoryID" value="">
+                    @foreach (var cat in Model.Categories)
+                    {
+                        @if (cat.CategoryID == Model.CategoryID)
+                        {
+                            <option value="@cat.CategoryID" selected>@cat.CategoryID @cat.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@cat.CategoryID">@cat.CategoryID @cat.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+        
+
+2. Update the ProductController - UpdateProduct method:
+
+        include this code to get a list of categories to display:
+        prod.Categories = repo.GetCategories();
+
+3. Update our Update statement in the ProductRepository file:
+
+        set the CategoryID in the UPDATE statement 
+
+        public void UpdateProduct(Product product)
+        {
+            _conn.Execute("UPDATE products SET Name = @name, Price = @price, CategoryID = @categoryID WHERE ProductID = @id",
+                new {name = product.Name, price = product.Price, categoryID = product.CategoryID,id = product.ProductID });
+        }
